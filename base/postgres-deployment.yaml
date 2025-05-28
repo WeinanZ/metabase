@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase-db
+  namespace: metabase
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: metabase-db
+  template:
+    metadata:
+      labels:
+        app: metabase-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:14
+          env:
+            - name: POSTGRES_DB
+              value: metabase
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: metabase-db-secret
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: metabase-db-secret
+                  key: password
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgres-storage
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: metabase-db-pvc
