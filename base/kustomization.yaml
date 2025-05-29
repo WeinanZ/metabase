@@ -9,3 +9,5 @@ resources:
  - metabase-db-secret.yaml
  - metabase-db-service.yaml
  - metabase-deployment.yaml
+ - metabase-service.yaml
+ - metabase-route.yaml
