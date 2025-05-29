@@ -8,3 +8,4 @@ resources:
  - metabase-db-pvc.yaml
  - metabase-db-secret.yaml
  - metabase-db-service.yaml
+ - metabase-deployment.yaml
